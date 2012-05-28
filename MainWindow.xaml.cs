@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Threading;
 
 namespace xlsdiff
 {
@@ -9,10 +10,13 @@ namespace xlsdiff
     public partial class MainWindow
     {
         private string _strFile1 = "";
-        private string _strFile2;
+        private string _strFile2 = "";
 
         public MainWindow()
         {
+            //Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("de-DE");
+            //Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("de-DE");
+
             InitializeComponent();
         }
 
@@ -57,11 +61,16 @@ namespace xlsdiff
 
         private void GetFileDetails()
         {
+            if (this._strFile1 != "" && this._strFile2 != "")
+            {
+                this.BtnShow.IsEnabled = true;
+            }
         }
 
         private void BtnShowClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Show");
+            this.BtnFile1.IsEnabled = this.BtnFile2.IsEnabled = this.BtnShow.IsEnabled = false;
+            this.LblComparing.Visibility = Visibility.Visible;
         }
     }
 }

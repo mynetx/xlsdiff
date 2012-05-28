@@ -59,4 +59,15 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style x:Key="ProgressBar" TargetType="{x:Type ProgressBar}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Rectangle HorizontalAlignment="Left" Width="{TemplateBinding Value}" Fill="{TemplateBinding Foreground}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

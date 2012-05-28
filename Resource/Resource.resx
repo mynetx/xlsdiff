@@ -117,4 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BtnBrowse" xml:space="preserve">
+    <value>BROWSE…</value>
+  </data>
+  <data name="BtnShow" xml:space="preserve">
+    <value>SHOW</value>
+  </data>
+  <data name="LblComparingFiles" xml:space="preserve">
+    <value>Comparing files…</value>
+  </data>
+  <data name="LblFile1" xml:space="preserve">
+    <value>Pick original Excel file</value>
+  </data>
+  <data name="LblFile2" xml:space="preserve">
+    <value>Pick changed Excel file</value>
+  </data>
+  <data name="LblShowChanges" xml:space="preserve">
+    <value>Show changes between files</value>
+  </data>
 </root>
