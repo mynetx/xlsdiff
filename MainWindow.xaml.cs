@@ -43,6 +43,7 @@ namespace xlsdiff
             if (result == true)
             {
                 this._strFile1 = dlg.FileName;
+                this.LblFile1.Text = System.IO.Path.GetFileName(dlg.FileName);
                 this.BtnFile2.IsEnabled = true;
                 this.GetFileDetails();
             }
@@ -50,11 +51,13 @@ namespace xlsdiff
 
         private void BtnFile2Click(object sender, RoutedEventArgs e)
         {
-            var dlg = new Microsoft.Win32.OpenFileDialog { FileName = "", DefaultExt = ".xls", Filter = "Excel files|*.xls;*.xlsx;*.csv" };
+            var dlg = new Microsoft.Win32.OpenFileDialog 
+                          { FileName = "", DefaultExt = ".xls", Filter = "Excel files|*.xls;*.xlsx;*.csv" };
             var result = dlg.ShowDialog();
             if (result == true)
             {
                 this._strFile2 = dlg.FileName;
+                this.LblFile2.Text = System.IO.Path.GetFileName(dlg.FileName);
                 this.GetFileDetails();
             }
         }
@@ -70,7 +73,7 @@ namespace xlsdiff
         private void BtnShowClick(object sender, RoutedEventArgs e)
         {
             this.BtnFile1.IsEnabled = this.BtnFile2.IsEnabled = this.BtnShow.IsEnabled = false;
-            this.LblComparing.Visibility = Visibility.Visible;
+            this.PrgProgress.Visibility = this.LblProgress.Visibility = Visibility.Visible;
         }
     }
 }
