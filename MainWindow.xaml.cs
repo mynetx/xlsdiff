@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Threading;
+using System.Reflection;
+using System.Resources;
 
 namespace xlsdiff
 {
@@ -11,12 +13,14 @@ namespace xlsdiff
     {
         private string _strFile1 = "";
         private string _strFile2 = "";
+        private readonly ResourceManager _resource;
 
         public MainWindow()
         {
             //Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("de-DE");
             //Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("de-DE");
 
+            this._resource = Resource.Resource.ResourceManager;
             InitializeComponent();
         }
 
@@ -38,7 +42,11 @@ namespace xlsdiff
         private void BtnFile1Click(object sender, RoutedEventArgs e)
         {
             var dlg = new Microsoft.Win32.OpenFileDialog
-                          {FileName = "", DefaultExt = ".xls", Filter = "Excel files|*.xls;*.xlsx;*.csv"};
+                          {
+                              FileName = "",
+                              DefaultExt = ".xls",
+                              Filter = this._resource.GetString("DlgExcelFiles") + "|*.xls;*.xlsx;*.csv"
+                          };
             var result = dlg.ShowDialog();
             if (result == true)
             {
@@ -51,8 +59,12 @@ namespace xlsdiff
 
         private void BtnFile2Click(object sender, RoutedEventArgs e)
         {
-            var dlg = new Microsoft.Win32.OpenFileDialog 
-                          { FileName = "", DefaultExt = ".xls", Filter = "Excel files|*.xls;*.xlsx;*.csv" };
+            var dlg = new Microsoft.Win32.OpenFileDialog
+                          {
+                              FileName = "",
+                              DefaultExt = ".xls",
+                              Filter = this._resource.GetString("DlgExcelFiles") + "|*.xls;*.xlsx;*.csv"
+                          };
             var result = dlg.ShowDialog();
             if (result == true)
             {

@@ -34,25 +34,51 @@
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="ButtonBorder" 
                         CornerRadius="0" 
-                        BorderThickness="2" 
-                        BorderBrush="{TemplateBinding TextBlock.Foreground}"
+                        BorderThickness="0" 
+                        Background="#FFD8D8D8" 
+                        RenderTransformOrigin="0.5,0.5">
+                        <ContentPresenter x:Name="ButtonContentPresenter"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            TextBlock.FontWeight="Bold"
+                            TextBlock.Foreground="Black"
+                         />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ButtonBorder" Property="Background" Value="#FFBBBBBB"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="ButtonContentPresenter" Property="TextBlock.Foreground" Value="#99000000"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="DefaultButton" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="ButtonBorder" 
+                        CornerRadius="0" 
+                        BorderThickness="0" 
                         Background="{TemplateBinding Background}" 
                         RenderTransformOrigin="0.5,0.5">
                         <ContentPresenter x:Name="ButtonContentPresenter"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             TextBlock.FontWeight="Bold"
+                            TextBlock.Foreground="White"
                          />
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsDefault" Value="True">
-                            <Setter TargetName="ButtonBorder" Property="BorderThickness" Value="0"/>
-                        </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Opacity" Value="0.7" />
+                            <Setter TargetName="ButtonBorder" Property="Background" Value="#FF666666"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="0.3" />
+                            <Setter TargetName="ButtonBorder" Property="Background" Value="#FF999999"/>
+                            <Setter TargetName="ButtonContentPresenter" Property="TextBlock.Foreground" Value="#66FFFFFF"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

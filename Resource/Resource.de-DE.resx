@@ -118,10 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BtnBrowse" xml:space="preserve">
-    <value>DURCHSUCHEN…</value>
+    <value>Durchsuchen…</value>
   </data>
   <data name="BtnShow" xml:space="preserve">
-    <value>ANZEIGEN</value>
+    <value>Anzeigen</value>
+  </data>
+  <data name="DlgExcelFiles" xml:space="preserve">
+    <value>Excel-Dateien</value>
+  </data>
+  <data name="LblComparingFiles" xml:space="preserve">
+    <value>Dateien werden verglichen…</value>
   </data>
   <data name="LblFile1" xml:space="preserve">
     <value>Original-Excel-Datei wählen</value>

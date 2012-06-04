@@ -61,7 +61,7 @@ namespace xlsdiff.Resource {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die BROWSE… ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Browse… ähnelt.
         /// </summary>
         public static string BtnBrowse {
             get {
@@ -70,11 +70,20 @@ namespace xlsdiff.Resource {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die SHOW ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show ähnelt.
         /// </summary>
         public static string BtnShow {
             get {
                 return ResourceManager.GetString("BtnShow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Excel files ähnelt.
+        /// </summary>
+        public static string DlgExcelFiles {
+            get {
+                return ResourceManager.GetString("DlgExcelFiles", resourceCulture);
             }
         }
         
