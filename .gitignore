@@ -5,9 +5,11 @@ publish
 
 # JetBrains ReSharper
 _ReSharper.*
+*.DotSettings
 
 # mstest test results
 TestResults
 
 # private data
 *.suo
+signtool.cmd

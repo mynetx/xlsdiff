@@ -135,7 +135,13 @@
   <data name="LblFile2" xml:space="preserve">
     <value>Pick changed Excel file</value>
   </data>
+  <data name="LblReadingFileX" xml:space="preserve">
+    <value>Reading file {0}…</value>
+  </data>
   <data name="LblShowChanges" xml:space="preserve">
     <value>Show changes between files</value>
+  </data>
+  <data name="MsgFileFormat" xml:space="preserve">
+    <value>{0} is not a supported Excel file. Please choose a different file.</value>
   </data>
 </root>

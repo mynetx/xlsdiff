@@ -1,8 +1,8 @@
-﻿using System;
+﻿using System.IO;
 using System.Windows;
-using System.Threading;
-using System.Reflection;
 using System.Resources;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace xlsdiff
 {
@@ -13,18 +13,21 @@ namespace xlsdiff
     {
         private string _strFile1 = "";
         private string _strFile2 = "";
+        private FileType _typeFile1;
+        private FileType _typeFile2;
         private readonly ResourceManager _resource;
 
         public MainWindow()
         {
-            //Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("de-DE");
-            //Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("de-DE");
-
             this._resource = Resource.Resource.ResourceManager;
             InitializeComponent();
         }
 
-        private void TitlebarMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        #region Window titlebar, base buttons
+        /// <summary>
+        /// Allow dragging the window by moving its titlebar
+        /// </summary>
+        private void TitlebarMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
         }
@@ -38,54 +41,104 @@ namespace xlsdiff
         {
             this.Close();
         }
+        #endregion
 
+        #region File pickers
         private void BtnFile1Click(object sender, RoutedEventArgs e)
         {
-            var dlg = new Microsoft.Win32.OpenFileDialog
-                          {
-                              FileName = "",
-                              DefaultExt = ".xls",
-                              Filter = this._resource.GetString("DlgExcelFiles") + "|*.xls;*.xlsx;*.csv"
-                          };
-            var result = dlg.ShowDialog();
-            if (result == true)
+            string strFile = this.AskFile(sender);
+            if (strFile != null)
             {
-                this._strFile1 = dlg.FileName;
-                this.LblFile1.Text = System.IO.Path.GetFileName(dlg.FileName);
-                this.BtnFile2.IsEnabled = true;
-                this.GetFileDetails();
+                this._strFile1 = strFile;
+                this.LblFile1.Text = Path.GetFileNameWithoutExtension(strFile);
+                this.LblFile1Ext.Text = Path.GetExtension(strFile);
+                if (this._strFile2 != "")
+                {
+                    this.BtnShow.IsEnabled = true;
+                }
+            }
+            else
+            {
+                this._strFile1 = this.LblFile1.Text = this.LblFile1Ext.Text = "";
+                this.BtnShow.IsEnabled = false;
             }
         }
 
         private void BtnFile2Click(object sender, RoutedEventArgs e)
         {
-            var dlg = new Microsoft.Win32.OpenFileDialog
-                          {
-                              FileName = "",
-                              DefaultExt = ".xls",
-                              Filter = this._resource.GetString("DlgExcelFiles") + "|*.xls;*.xlsx;*.csv"
-                          };
-            var result = dlg.ShowDialog();
-            if (result == true)
+            string strFile = this.AskFile(sender);
+            if (strFile != null)
             {
-                this._strFile2 = dlg.FileName;
-                this.LblFile2.Text = System.IO.Path.GetFileName(dlg.FileName);
-                this.GetFileDetails();
+                this._strFile2 = strFile;
+                this.LblFile2.Text = Path.GetFileNameWithoutExtension(strFile);
+                this.LblFile2Ext.Text = Path.GetExtension(strFile);
+                if (this._strFile1 != "")
+                {
+                    this.BtnShow.IsEnabled = true;   
+                }
+            }
+            else
+            {
+                this._strFile2 = this.LblFile2.Text = this.LblFile2Ext.Text = "";
+                this.BtnShow.IsEnabled = false;
             }
         }
 
-        private void GetFileDetails()
+        /// <summary>
+        /// Asks for an Excel file name and validates the file type
+        /// </summary>
+        private string AskFile(object sender)
         {
-            if (this._strFile1 != "" && this._strFile2 != "")
+            var dlg = new Microsoft.Win32.OpenFileDialog {
+                FileName = "",
+                DefaultExt = ".xls",
+                Filter = this._resource.GetString("DlgExcelFiles") + "|*.xls;*.xlsx;*.csv"
+            };
+            var result = dlg.ShowDialog();
+
+            if (result == false)
             {
-                this.BtnShow.IsEnabled = true;
+                return null;
             }
+
+            // detect file type
+            FileType typeFile;
+            try
+            {
+                typeFile = new FileTypeDetector(dlg.FileName).Detect();
+            }
+            catch (FileFormatException)
+            {
+                string strFileFormat = this._resource.GetString("MsgFileFormat") ?? "";
+                MessageBox.Show(
+                    string.Format(strFileFormat, Path.GetFileName(dlg.FileName)),
+                    "xlsdiff", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+                return null;
+            }
+            switch (((Button) sender).Name)
+            {
+                case "BtnFile1":
+                    this._typeFile1 = typeFile;
+                    break;
+                case "BtnFile2":
+                    this._typeFile2 = typeFile;
+                    break;
+            }
+            return dlg.FileName;
         }
+        #endregion
 
         private void BtnShowClick(object sender, RoutedEventArgs e)
         {
+            // disable the controls as we're working now
             this.BtnFile1.IsEnabled = this.BtnFile2.IsEnabled = this.BtnShow.IsEnabled = false;
+
+            // show some progress
             this.PrgProgress.Visibility = this.LblProgress.Visibility = Visibility.Visible;
+            string strReadingFileX = this._resource.GetString("LblReadingFileX");
+            this.LblProgress.Text = string.Format(strReadingFileX, 1);
+            this.PrgProgress.Value = 50;
         }
     }
 }

@@ -115,11 +115,29 @@ namespace xlsdiff.Resource {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Reading file {0}… ähnelt.
+        /// </summary>
+        public static string LblReadingFileX {
+            get {
+                return ResourceManager.GetString("LblReadingFileX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Show changes between files ähnelt.
         /// </summary>
         public static string LblShowChanges {
             get {
                 return ResourceManager.GetString("LblShowChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {0} is not a supported Excel file. Please choose a different file. ähnelt.
+        /// </summary>
+        public static string MsgFileFormat {
+            get {
+                return ResourceManager.GetString("MsgFileFormat", resourceCulture);
             }
         }
     }

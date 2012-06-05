@@ -19,8 +19,8 @@
         <requestedExecutionLevel level="asInvoker" uiAccess="false" />
       </requestedPrivileges>
       <applicationRequestMinimum>
-        <PermissionSet class="System.Security.PermissionSet" version="1" Unrestricted="true" ID="Custom" SameSite="site" />
         <defaultAssemblyRequest permissionSetReference="Custom" />
+        <PermissionSet class="System.Security.PermissionSet" version="1" ID="Custom" SameSite="site" Unrestricted="true" />
       </applicationRequestMinimum>
     </security>
   </trustInfo>
@@ -28,20 +28,13 @@
     <application>
       <!-- Eine Liste aller Windows-Versionen, mit denen die Anwendung kompatibel ist. Windows wählt automatisch die am stärksten kompatible Umgebung aus.-->
       <!-- Wenn die Anwendung mit Windows 7 kompatibel ist, heben Sie die Kommentierung des folgenden supportedOS-Knotens auf.-->
-      <!--<supportedOS Id="{35138b9a-5d96-4fbd-8e2d-a2440225f93a}"/>-->
+      <supportedOS Id="{35138b9a-5d96-4fbd-8e2d-a2440225f93a}" />
     </application>
   </compatibility>
   <!-- Designs für allgemeine Windows-Steuerelemente und -Dialogfelder (Windows XP und höher) aktivieren -->
-  <!-- <dependency>
+  <dependency>
     <dependentAssembly>
-      <assemblyIdentity
-          type="win32"
-          name="Microsoft.Windows.Common-Controls"
-          version="6.0.0.0"
-          processorArchitecture="*"
-          publicKeyToken="6595b64144ccf1df"
-          language="*"
-        />
+      <assemblyIdentity type="win32" name="Microsoft.Windows.Common-Controls" version="6.0.0.0" processorArchitecture="*" publicKeyToken="6595b64144ccf1df" language="*" />
     </dependentAssembly>
-  </dependency>-->
+  </dependency>
 </asmv1:assembly>
