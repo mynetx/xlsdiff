@@ -15,11 +15,9 @@ namespace xlsdiff
         private string _strFile2 = "";
         private FileType _typeFile1;
         private FileType _typeFile2;
-        private readonly ResourceManager _resource;
 
         public MainWindow()
         {
-            this._resource = Resource.Resource.ResourceManager;
             InitializeComponent();
         }
 
@@ -92,7 +90,7 @@ namespace xlsdiff
             var dlg = new Microsoft.Win32.OpenFileDialog {
                 FileName = "",
                 DefaultExt = ".xls",
-                Filter = this._resource.GetString("DlgExcelFiles") + "|*.xls;*.xlsx;*.csv"
+                Filter = Resource.Resource.DlgExcelFiles + "|*.xls;*.xlsx;*.csv"
             };
             var result = dlg.ShowDialog();
 
@@ -109,9 +107,8 @@ namespace xlsdiff
             }
             catch (FileFormatException)
             {
-                string strFileFormat = this._resource.GetString("MsgFileFormat") ?? "";
                 MessageBox.Show(
-                    string.Format(strFileFormat, Path.GetFileName(dlg.FileName)),
+                    string.Format(Resource.Resource.MsgFileFormat, Path.GetFileName(dlg.FileName)),
                     "xlsdiff", MessageBoxButton.OK,
                     MessageBoxImage.Error);
                 return null;
@@ -136,7 +133,7 @@ namespace xlsdiff
 
             // show some progress
             this.PrgProgress.Visibility = this.LblProgress.Visibility = Visibility.Visible;
-            string strReadingFileX = this._resource.GetString("LblReadingFileX");
+            string strReadingFileX = Resource.Resource.LblReadingFileX;
             this.LblProgress.Text = string.Format(strReadingFileX, 1);
             this.PrgProgress.Value = 50;
         }
