@@ -89,9 +89,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ProgressBar}">
-                    <Grid Background="{TemplateBinding Background}">
-                        <Rectangle HorizontalAlignment="Left" Width="{TemplateBinding Value}" Fill="{TemplateBinding Foreground}" />
-                    </Grid>
+                    <Border Background="#FFBBBBBB" Height="10">
+                        <Grid x:Name="PART_Track">
+                            <Rectangle x:Name="PART_Indicator" HorizontalAlignment="Left" Fill="{TemplateBinding Foreground}" />
+                        </Grid>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
