@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Microsoft.Win32;
 
 namespace xlsdiff
 {
@@ -29,17 +29,17 @@ namespace xlsdiff
         /// </summary>
         private void TitlebarMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.DragMove();
+            DragMove();
         }
 
         private void BtnMinimizeClick(object sender, RoutedEventArgs e)
         {
-            this.WindowState = WindowState.Minimized;
+            WindowState = WindowState.Minimized;
         }
 
         private void BtnCloseClick(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         #endregion
@@ -48,41 +48,41 @@ namespace xlsdiff
 
         private void BtnFile1Click(object sender, RoutedEventArgs e)
         {
-            string strFile = this.AskFile(sender, this._strFile2);
+            string strFile = AskFile(sender, _strFile2);
             if (strFile != null)
             {
-                this._strFile1 = strFile;
-                this.LblFile1.Text = Path.GetFileNameWithoutExtension(strFile);
-                this.LblFile1Ext.Text = Path.GetExtension(strFile);
-                if (this._strFile2 != "")
+                _strFile1 = strFile;
+                LblFile1.Text = Path.GetFileNameWithoutExtension(strFile);
+                LblFile1Ext.Text = Path.GetExtension(strFile);
+                if (_strFile2 != "")
                 {
-                    this.BtnShow.IsEnabled = true;
+                    BtnShow.IsEnabled = true;
                 }
             }
             else
             {
-                this._strFile1 = this.LblFile1.Text = this.LblFile1Ext.Text = "";
-                this.BtnShow.IsEnabled = false;
+                _strFile1 = LblFile1.Text = LblFile1Ext.Text = "";
+                BtnShow.IsEnabled = false;
             }
         }
 
         private void BtnFile2Click(object sender, RoutedEventArgs e)
         {
-            string strFile = this.AskFile(sender, this._strFile1);
+            string strFile = AskFile(sender, _strFile1);
             if (strFile != null)
             {
-                this._strFile2 = strFile;
-                this.LblFile2.Text = Path.GetFileNameWithoutExtension(strFile);
-                this.LblFile2Ext.Text = Path.GetExtension(strFile);
-                if (this._strFile1 != "")
+                _strFile2 = strFile;
+                LblFile2.Text = Path.GetFileNameWithoutExtension(strFile);
+                LblFile2Ext.Text = Path.GetExtension(strFile);
+                if (_strFile1 != "")
                 {
-                    this.BtnShow.IsEnabled = true;
+                    BtnShow.IsEnabled = true;
                 }
             }
             else
             {
-                this._strFile2 = this.LblFile2.Text = this.LblFile2Ext.Text = "";
-                this.BtnShow.IsEnabled = false;
+                _strFile2 = LblFile2.Text = LblFile2Ext.Text = "";
+                BtnShow.IsEnabled = false;
             }
         }
 
@@ -91,13 +91,13 @@ namespace xlsdiff
         /// </summary>
         private string AskFile(object sender, string strOtherFile)
         {
-            var dlg = new Microsoft.Win32.OpenFileDialog
+            var dlg = new OpenFileDialog
                           {
                               FileName = "",
                               DefaultExt = ".xls",
                               Filter = Resource.Resource.DlgExcelFiles + "|*.xls;*.xlsx;*.csv"
                           };
-            var result = dlg.ShowDialog();
+            bool? result = dlg.ShowDialog();
 
             if (result == false)
             {
@@ -127,10 +127,10 @@ namespace xlsdiff
             switch (((Button) sender).Name)
             {
                 case "BtnFile1":
-                    this._typeFile1 = typeFile;
+                    _typeFile1 = typeFile;
                     break;
                 case "BtnFile2":
-                    this._typeFile2 = typeFile;
+                    _typeFile2 = typeFile;
                     break;
             }
             return dlg.FileName;
@@ -141,19 +141,19 @@ namespace xlsdiff
         private void BtnShowClick(object sender, RoutedEventArgs e)
         {
             // disable the controls as we're working now
-            this.BtnFile1.IsEnabled = this.BtnFile2.IsEnabled = this.BtnShow.IsEnabled = false;
+            BtnFile1.IsEnabled = BtnFile2.IsEnabled = BtnShow.IsEnabled = false;
 
             // show some progress
-            this.PrgProgress.Visibility = this.LblProgress.Visibility = Visibility.Visible;
+            PrgProgress.Visibility = LblProgress.Visibility = Visibility.Visible;
 
             // progress for file 1
-            this.LblProgress.Text = string.Format(Resource.Resource.LblReadingFileX, 1);
-            this.PrgProgress.Value = 5;
+            LblProgress.Text = string.Format(Resource.Resource.LblReadingFileX, 1);
+            PrgProgress.Value = 5;
 
-            switch (this._typeFile1)
+            switch (_typeFile1)
             {
                 case FileType.Xls:
-                    XlsFileConverter objConvert = new XlsFileConverter { Source = this._strFile1, TargetType = FileType.Csv };
+                    var objConvert = new XlsFileConverter {Source = _strFile1, TargetType = FileType.Csv};
                     objConvert.ConversionProgressUpdated += ConversionProgressHandlerFile1;
                     try
                     {
@@ -165,10 +165,10 @@ namespace xlsdiff
                     break;
             }
 
-            switch (this._typeFile2)
+            switch (_typeFile2)
             {
                 case FileType.Xls:
-                    XlsFileConverter objConvert = new XlsFileConverter { Source = this._strFile2, TargetType = FileType.Csv };
+                    var objConvert = new XlsFileConverter {Source = _strFile2, TargetType = FileType.Csv};
                     objConvert.ConversionProgressUpdated += ConversionProgressHandlerFile2;
                     try
                     {
@@ -181,15 +181,15 @@ namespace xlsdiff
             }
         }
 
-        void ConversionProgressHandlerFile1(int intPercentage)
+        private void ConversionProgressHandlerFile1(int intPercentage)
         {
-            PrgProgress.Value = 5 + 25 * (intPercentage / 100);
+            PrgProgress.Value = 5 + 25*(intPercentage/100);
             LblProgress.Text = string.Format(Resource.Resource.LblReadingFileXPercent, 1, intPercentage);
         }
 
-        void ConversionProgressHandlerFile2(int intPercentage)
+        private void ConversionProgressHandlerFile2(int intPercentage)
         {
-            PrgProgress.Value = 30 + 25 * (intPercentage / 100);
+            PrgProgress.Value = 30 + 25*(intPercentage/100);
             LblProgress.Text = string.Format(Resource.Resource.LblReadingFileXPercent, 2, intPercentage);
         }
     }
