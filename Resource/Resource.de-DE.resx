@@ -138,10 +138,16 @@
   <data name="LblReadingFileX" xml:space="preserve">
     <value>Datei {0} wird gelesen…</value>
   </data>
+  <data name="LblReadingFileXPercent" xml:space="preserve">
+    <value>Datei {0} wird gelesen… {1}%</value>
+  </data>
   <data name="LblShowChanges" xml:space="preserve">
     <value>Änderungen zwischen Dateien anzeigen</value>
   </data>
   <data name="MsgFileFormat" xml:space="preserve">
     <value>{0} ist keine unterstützte Excel-Datei. Bitte wählen Sie eine andere Datei.</value>
+  </data>
+  <data name="MsgFileTwice" xml:space="preserve">
+    <value>Sie können nicht die gleiche Datei zweimal wählen. Bitte wählen Sie eine andere Datei.</value>
   </data>
 </root>

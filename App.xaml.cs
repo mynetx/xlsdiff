@@ -2,7 +2,7 @@
 {
     public enum FileType
     {
-        Xls, Xlsx, Csv
+        Csv, Xls, Xlsx
     }
 
     /// <summary>
