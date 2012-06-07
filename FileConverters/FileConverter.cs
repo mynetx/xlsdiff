@@ -94,6 +94,8 @@ namespace xlsdiff
                         return objConvert.Target;
                     }
             }
+
+            return null;
         }
     }
 }
