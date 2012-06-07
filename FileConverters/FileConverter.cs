@@ -7,7 +7,7 @@ namespace xlsdiff
     {
         #region Delegates
 
-        public delegate void ConversionProgressUpdatedEventHandler(int intPercentage);
+        public delegate void ConversionProgressUpdatedEventHandler(double dblPercentage);
 
         #endregion
 

@@ -14,7 +14,7 @@ namespace xlsdiff
     /// </summary>
     public partial class MainWindow
     {
-        private float _fltPercentageFile1;
+        private double _dblPercentageFile1;
         private string _strCurrentFile = "";
         private string _strFile1 = "";
         private string _strFile2 = "";
@@ -35,16 +35,18 @@ namespace xlsdiff
         {
             // disable the controls as we're working now
             BtnFile1.IsEnabled = BtnFile2.IsEnabled = BtnShow.IsEnabled = false;
+            DoEvents();
 
             // show some progress
-            PrgProgress.Value = 4;
+            PrgProgress.Value = .5;
             LblProgress.Text = Resource.Resource.LblPreparing;
             PrgProgress.Visibility = LblProgress.Visibility = Visibility.Visible;
+            DoEvents();
 
             // calculate whether the first or second file is larger
             var objInfoFile1 = new FileInfo(_strFile1);
             var objInfoFile2 = new FileInfo(_strFile2);
-            _fltPercentageFile1 = objInfoFile1.Length/(objInfoFile1.Length + objInfoFile2.Length);
+            _dblPercentageFile1 = objInfoFile1.Length / Convert.ToDouble(objInfoFile1.Length + objInfoFile2.Length);
 
             // file 1
             _strCurrentFile = "1";
@@ -58,17 +60,17 @@ namespace xlsdiff
             BtnFile1.IsEnabled = BtnFile2.IsEnabled = BtnShow.IsEnabled = true;
         }
 
-        private void ConversionProgressHandler(int intPercentage)
+        private void ConversionProgressHandler(double dblPercentage)
         {
-            int intStartPercentage = 5;
-            var intProgressTotal = (int) (50*_fltPercentageFile1);
+            double dblStartPercentage = 1.0;
+            var dblProgressTotal = 50*_dblPercentageFile1;
             if (_strCurrentFile == "2")
             {
-                intStartPercentage += intProgressTotal;
-                intProgressTotal = 50 - intProgressTotal;
+                dblStartPercentage += dblProgressTotal;
+                dblProgressTotal = 50 - dblProgressTotal;
             }
-            PrgProgress.Value = intStartPercentage + intProgressTotal * (intPercentage / 100.0);
-            LblProgress.Text = string.Format(Resource.Resource.LblReadingFileXPercent, _strCurrentFile, intPercentage);
+            PrgProgress.Value = dblStartPercentage + dblProgressTotal * (dblPercentage / 100.0);
+            LblProgress.Text = string.Format(Resource.Resource.LblReadingFileXPercent, _strCurrentFile, (int) dblPercentage);
             DoEvents();
         }
 

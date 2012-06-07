@@ -1,11 +1,8 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
 using System.IO;
-using System.Threading;
 using System.Windows;
-using System.Windows.Threading;
 
 namespace xlsdiff
 {
@@ -53,8 +50,7 @@ namespace xlsdiff
                 {
                     if (intRow % 10 == 0)
                     {
-                        ConversionProgressUpdated((int) (intRow/(float) intRows*100));
-                        Thread.Sleep(100);
+                        ConversionProgressUpdated(intRow/(double) intRows*100);
                     }
 
                     string rowString = "";
@@ -73,7 +69,9 @@ namespace xlsdiff
             finally
             {
                 if (resConn.State == ConnectionState.Open)
+                {
                     resConn.Close();
+                }
                 resConn.Dispose();
                 objCommand.Dispose();
                 objAdapter.Dispose();
