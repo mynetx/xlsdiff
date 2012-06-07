@@ -61,11 +61,20 @@ namespace xlsdiff.Resource {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Browse… ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die _Browse… ähnelt.
         /// </summary>
         public static string BtnBrowse {
             get {
                 return ResourceManager.GetString("BtnBrowse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die _Cancel ähnelt.
+        /// </summary>
+        public static string BtnCancel {
+            get {
+                return ResourceManager.GetString("BtnCancel", resourceCulture);
             }
         }
         
@@ -88,7 +97,7 @@ namespace xlsdiff.Resource {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Show ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die _Show ähnelt.
         /// </summary>
         public static string BtnShow {
             get {

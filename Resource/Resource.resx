@@ -118,7 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BtnBrowse" xml:space="preserve">
-    <value>Browse…</value>
+    <value>_Browse…</value>
+  </data>
+  <data name="BtnCancel" xml:space="preserve">
+    <value>_Cancel</value>
   </data>
   <data name="BtnClose" xml:space="preserve">
     <value>Close</value>
@@ -127,7 +130,7 @@
     <value>Minimize</value>
   </data>
   <data name="BtnShow" xml:space="preserve">
-    <value>Show</value>
+    <value>_Show</value>
   </data>
   <data name="DlgExcelFiles" xml:space="preserve">
     <value>Excel files</value>

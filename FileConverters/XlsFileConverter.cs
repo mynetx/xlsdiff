@@ -12,11 +12,16 @@ namespace xlsdiff
 
         protected string GetConnectionString()
         {
-            return string.Format("Provider=Microsoft.Jet.OLEDB.4.0;Data Source={0};Extended Properties=\"Excel 8.0;HDR=No;IMEX=1\";", Source);
+            return
+                string.Format(
+                    "Provider=Microsoft.Jet.OLEDB.4.0;Data Source={0};Extended Properties=\"Excel 8.0;HDR=No;IMEX=1\";",
+                    Source);
         }
 
         public new bool Convert(bool overwriteExistingTarget = false)
         {
+            bool boolSuccess = false;
+
             if (Source == null)
             {
                 throw new MissingFieldException("The source file to convert has not been set.");
@@ -48,9 +53,14 @@ namespace xlsdiff
 
                 for (int intRow = 0; intRow < intRows; intRow++)
                 {
-                    if (intRow % 10 == 0)
+                    if (intRow%10 == 0)
                     {
                         ConversionProgressUpdated(intRow/(double) intRows*100);
+                        // check if we are to cancel the operation
+                        if (BoolCancel)
+                        {
+                            throw new Exception();
+                        }
                     }
 
                     string rowString = "";
@@ -61,10 +71,14 @@ namespace xlsdiff
                     resTarget.WriteLine(rowString);
                 }
                 ConversionProgressUpdated(100);
+                boolSuccess = true;
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.ToString());
+                if (! BoolCancel)
+                {
+                    MessageBox.Show(exc.ToString());
+                }
             }
             finally
             {
@@ -78,8 +92,7 @@ namespace xlsdiff
                 resTarget.Close();
                 resTarget.Dispose();
             }
-
-            return false;
+            return boolSuccess;
         }
     }
 }

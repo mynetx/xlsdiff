@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <Color x:Key="Colorizer">#FF006400</Color>
-  <Color x:Key="ColorizerTransparent">#60006400</Color>
+  <Color x:Key="ColorizerTransparent">#28006400</Color>
   <Color x:Key="BaseButton">#FF666666</Color>
   <Color x:Key="ButtonBackground">#FFD8D8D8</Color>
   <Color x:Key="ButtonBackgroundMouseOver">#FFBBBBBB</Color>
@@ -47,7 +47,7 @@
               <SolidColorBrush Color="{StaticResource ButtonBackground}" />
             </Border.Background>
             <ContentPresenter x:Name="ButtonContentPresenter" VerticalAlignment="Center" HorizontalAlignment="Center"
-                              TextBlock.FontWeight="Bold" TextBlock.Foreground="Black" />
+                              TextBlock.FontWeight="Bold" TextBlock.Foreground="Black" RecognizesAccessKey="True" />
           </Border>
           <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">

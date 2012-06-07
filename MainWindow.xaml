@@ -58,7 +58,7 @@
         <RowDefinition Height="20" />
         <RowDefinition Height="20" />
         <RowDefinition Height="4" />
-        <RowDefinition Height="20" />
+        <RowDefinition Height="30" />
       </Grid.RowDefinitions>
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="35" />
@@ -102,10 +102,13 @@
       <Button Content="{x:Static resx:Resource.BtnShow}" Style="{StaticResource Button}" Name="BtnShow" Grid.Row="1"
               Grid.Column="7" Click="BtnShowClick" IsEnabled="False" IsDefault="True" />
 
-      <ProgressBar Name="PrgProgress" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="7" Visibility="Hidden"
+      <ProgressBar Name="PrgProgress" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="5" Visibility="Hidden"
                    Style="{StaticResource ProgressBar}" />
-      <TextBlock Name="LblProgress" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="7" Visibility="Hidden"
+      <TextBlock Name="LblProgress" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="5" Visibility="Hidden"
                  Foreground="{StaticResource TextBrush}" VerticalAlignment="Center" TextTrimming="WordEllipsis" />
+      <Button Content="{x:Static resx:Resource.BtnCancel}" Style="{StaticResource Button}" Name="BtnCancel"
+              Grid.Row="4" Grid.Column="7" Grid.RowSpan="3" Click="BtnCancelClick" IsCancel="True" Visibility="Hidden" Height="30"
+              Margin="0,5,0,0" />
     </Grid>
   </Grid>
 </Window>

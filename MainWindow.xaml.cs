@@ -40,37 +40,55 @@ namespace xlsdiff
             // show some progress
             PrgProgress.Value = .5;
             LblProgress.Text = Resource.Resource.LblPreparing;
-            PrgProgress.Visibility = LblProgress.Visibility = Visibility.Visible;
+            PrgProgress.Visibility = LblProgress.Visibility = BtnCancel.Visibility = Visibility.Visible;
             DoEvents();
 
             // calculate whether the first or second file is larger
             var objInfoFile1 = new FileInfo(_strFile1);
             var objInfoFile2 = new FileInfo(_strFile2);
-            _dblPercentageFile1 = objInfoFile1.Length / Convert.ToDouble(objInfoFile1.Length + objInfoFile2.Length);
+            _dblPercentageFile1 = objInfoFile1.Length/Convert.ToDouble(objInfoFile1.Length + objInfoFile2.Length);
 
             // file 1
             _strCurrentFile = "1";
             string strTarget1 = FileConverter.ConvertFile(_strFile1, _typeFile1, ConversionProgressHandler);
 
             // file 2
-            _strCurrentFile = "2";
-            string strTarget2 = FileConverter.ConvertFile(_strFile2, _typeFile2, ConversionProgressHandler);
+            string strTarget2 = "";
+            if (!FileConverter.BoolCancel)
+            {
+                _strCurrentFile = "2";
+                strTarget2 = FileConverter.ConvertFile(_strFile2, _typeFile2, ConversionProgressHandler);
+            }
 
-            MessageBox.Show(strTarget1 + "\r\n" + strTarget2);
+            if (!FileConverter.BoolCancel)
+            {
+                MessageBox.Show(strTarget1 + "\r\n" + strTarget2);
+            }
+
+            FileConverter.BoolCancel = false;
             BtnFile1.IsEnabled = BtnFile2.IsEnabled = BtnShow.IsEnabled = true;
+            PrgProgress.Visibility = LblProgress.Visibility = BtnCancel.Visibility = Visibility.Hidden;
+        }
+
+        private void BtnCancelClick(object sender, RoutedEventArgs e)
+        {
+            FileConverter.BoolCancel = true;
+            BtnFile1.IsEnabled = BtnFile2.IsEnabled = BtnShow.IsEnabled = true;
+            PrgProgress.Visibility = LblProgress.Visibility = BtnCancel.Visibility = Visibility.Hidden;
         }
 
         private void ConversionProgressHandler(double dblPercentage)
         {
             double dblStartPercentage = 1.0;
-            var dblProgressTotal = 50*_dblPercentageFile1;
+            double dblProgressTotal = 50*_dblPercentageFile1;
             if (_strCurrentFile == "2")
             {
                 dblStartPercentage += dblProgressTotal;
                 dblProgressTotal = 50 - dblProgressTotal;
             }
-            PrgProgress.Value = dblStartPercentage + dblProgressTotal * (dblPercentage / 100.0);
-            LblProgress.Text = string.Format(Resource.Resource.LblReadingFileXPercent, _strCurrentFile, (int) dblPercentage);
+            PrgProgress.Value = dblStartPercentage + dblProgressTotal*(dblPercentage/100.0);
+            LblProgress.Text = string.Format(Resource.Resource.LblReadingFileXPercent, _strCurrentFile,
+                                             (int) dblPercentage);
             DoEvents();
         }
 
@@ -126,40 +144,26 @@ namespace xlsdiff
         private void BtnFile1Click(object sender, RoutedEventArgs e)
         {
             string strFile = AskFile(sender, _strFile2);
-            if (strFile != null)
+            if (strFile == null) return;
+            _strFile1 = strFile;
+            LblFile1.Text = Path.GetFileNameWithoutExtension(strFile);
+            LblFile1Ext.Text = Path.GetExtension(strFile);
+            if (_strFile2 != "")
             {
-                _strFile1 = strFile;
-                LblFile1.Text = Path.GetFileNameWithoutExtension(strFile);
-                LblFile1Ext.Text = Path.GetExtension(strFile);
-                if (_strFile2 != "")
-                {
-                    BtnShow.IsEnabled = true;
-                }
-            }
-            else
-            {
-                _strFile1 = LblFile1.Text = LblFile1Ext.Text = "";
-                BtnShow.IsEnabled = false;
+                BtnShow.IsEnabled = true;
             }
         }
 
         private void BtnFile2Click(object sender, RoutedEventArgs e)
         {
             string strFile = AskFile(sender, _strFile1);
-            if (strFile != null)
+            if (strFile == null) return;
+            _strFile2 = strFile;
+            LblFile2.Text = Path.GetFileNameWithoutExtension(strFile);
+            LblFile2Ext.Text = Path.GetExtension(strFile);
+            if (_strFile1 != "")
             {
-                _strFile2 = strFile;
-                LblFile2.Text = Path.GetFileNameWithoutExtension(strFile);
-                LblFile2Ext.Text = Path.GetExtension(strFile);
-                if (_strFile1 != "")
-                {
-                    BtnShow.IsEnabled = true;
-                }
-            }
-            else
-            {
-                _strFile2 = LblFile2.Text = LblFile2Ext.Text = "";
-                BtnShow.IsEnabled = false;
+                BtnShow.IsEnabled = true;
             }
         }
 

@@ -11,6 +11,8 @@ namespace xlsdiff
 
         #endregion
 
+        public static bool BoolCancel;
+
         private string _strSource;
 
         private string _strTarget;
@@ -60,12 +62,16 @@ namespace xlsdiff
                         objConvert.ConversionProgressUpdated += fnProgressUpdated;
                         try
                         {
-                            objConvert.Convert();
+                            if (objConvert.Convert())
+                            {
+                                return objConvert.Target;
+                            }
                         }
                         catch (Exception)
                         {
+                            return null;
                         }
-                        return objConvert.Target;
+                        break;
                     }
                 case FileType.Xlsx:
                     {
@@ -73,12 +79,16 @@ namespace xlsdiff
                         objConvert.ConversionProgressUpdated += fnProgressUpdated;
                         try
                         {
-                            objConvert.Convert();
+                            if (objConvert.Convert())
+                            {
+                                return objConvert.Target;
+                            }
                         }
                         catch (Exception)
                         {
+                            return null;
                         }
-                        return objConvert.Target;
+                        break;
                     }
                 case FileType.Csv:
                     {
@@ -86,12 +96,16 @@ namespace xlsdiff
                         objConvert.ConversionProgressUpdated += fnProgressUpdated;
                         try
                         {
-                            objConvert.Convert();
+                            if (objConvert.Convert())
+                            {
+                                return objConvert.Target;
+                            }
                         }
                         catch (Exception)
                         {
+                            return null;
                         }
-                        return objConvert.Target;
+                        break;
                     }
             }
 

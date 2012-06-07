@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Data;
-using System.Data.OleDb;
-using System.IO;
 using System.Windows;
 
 namespace xlsdiff
@@ -19,7 +16,6 @@ namespace xlsdiff
 
             try
             {
-                
             }
             catch (Exception exc)
             {
