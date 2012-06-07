@@ -120,6 +120,12 @@
   <data name="BtnBrowse" xml:space="preserve">
     <value>Browse…</value>
   </data>
+  <data name="BtnClose" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="BtnMinimize" xml:space="preserve">
+    <value>Minimize</value>
+  </data>
   <data name="BtnShow" xml:space="preserve">
     <value>Show</value>
   </data>
@@ -149,5 +155,8 @@
   </data>
   <data name="MsgFileTwice" xml:space="preserve">
     <value>You cannot pick the same file twice. Please pick a different file.</value>
+  </data>
+  <data name="MsgWorkingConfirmExit" xml:space="preserve">
+    <value>Comparing files is still in progress. Are you sure you want to close the application?</value>
   </data>
 </root>

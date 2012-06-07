@@ -3,11 +3,14 @@
   <Color x:Key="Colorizer">#FF006400</Color>
   <Color x:Key="ColorizerTransparent">#60006400</Color>
   <Color x:Key="BaseButton">#FF666666</Color>
-  <Color x:Key="Background">#FFD8D8D8</Color>
-  <Color x:Key="BackgroundMouseOver">#FFBBBBBB</Color>
-  <Color x:Key="BackgroundMouseDown">#FF999999</Color>
-  <Color x:Key="BackgroundMouseOverDefault">#FF008000</Color>
-  <Color x:Key="BackgroundMouseDownDefault">#FF009900</Color>
+  <Color x:Key="ButtonBackground">#FFD8D8D8</Color>
+  <Color x:Key="ButtonBackgroundMouseOver">#FFBBBBBB</Color>
+  <Color x:Key="ButtonBackgroundMouseDown">#FF999999</Color>
+  <Color x:Key="ButtonBackgroundMouseOverDefault">#FF008000</Color>
+  <Color x:Key="ButtonBackgroundMouseDownDefault">#FF009900</Color>
+  <Color x:Key="Text">#CC000000</Color>
+  <Color x:Key="WindowBorder">#FF666666</Color>
+  <SolidColorBrush x:Key="WindowBorderBrush" Color="{StaticResource WindowBorder}" />
 
   <Style x:Key="CloseButton" TargetType="{x:Type Button}">
     <Setter Property="Template">
@@ -41,7 +44,7 @@
         <ControlTemplate TargetType="{x:Type Button}">
           <Border x:Name="ButtonBorder" CornerRadius="0" BorderThickness="0" RenderTransformOrigin="0.5,0.5">
             <Border.Background>
-              <SolidColorBrush Color="{StaticResource Background}" />
+              <SolidColorBrush Color="{StaticResource ButtonBackground}" />
             </Border.Background>
             <ContentPresenter x:Name="ButtonContentPresenter" VerticalAlignment="Center" HorizontalAlignment="Center"
                               TextBlock.FontWeight="Bold" TextBlock.Foreground="Black" />
@@ -51,15 +54,15 @@
               <Trigger.EnterActions>
                 <BeginStoryboard>
                   <Storyboard TargetProperty="Background.Color">
-                    <ColorAnimation Storyboard.TargetName="ButtonBorder" To="{StaticResource BackgroundMouseOver}"
-                                    Duration="0:0:0.2" />
+                    <ColorAnimation Storyboard.TargetName="ButtonBorder"
+                                    To="{StaticResource ButtonBackgroundMouseOver}" Duration="0:0:0.2" />
                   </Storyboard>
                 </BeginStoryboard>
               </Trigger.EnterActions>
               <Trigger.ExitActions>
                 <BeginStoryboard>
                   <Storyboard TargetProperty="Background.Color" FillBehavior="Stop">
-                    <ColorAnimation Storyboard.TargetName="ButtonBorder" To="{StaticResource Background}"
+                    <ColorAnimation Storyboard.TargetName="ButtonBorder" To="{StaticResource ButtonBackground}"
                                     Duration="0:0:0.2" />
                   </Storyboard>
                 </BeginStoryboard>
@@ -69,15 +72,15 @@
               <Trigger.EnterActions>
                 <BeginStoryboard>
                   <Storyboard TargetProperty="Background.Color" FillBehavior="Stop">
-                    <ColorAnimation Storyboard.TargetName="ButtonBorder" To="{StaticResource BackgroundMouseDown}"
-                                    Duration="0:0:0.1" />
+                    <ColorAnimation Storyboard.TargetName="ButtonBorder"
+                                    To="{StaticResource ButtonBackgroundMouseDown}" Duration="0:0:0.1" />
                   </Storyboard>
                 </BeginStoryboard>
               </Trigger.EnterActions>
               <Trigger.ExitActions>
                 <BeginStoryboard>
                   <Storyboard TargetProperty="Background.Color" FillBehavior="Stop">
-                    <ColorAnimation Storyboard.TargetName="ButtonBorder" To="{StaticResource Background}"
+                    <ColorAnimation Storyboard.TargetName="ButtonBorder" To="{StaticResource ButtonBackground}"
                                     Duration="0:0:0.1" />
                   </Storyboard>
                 </BeginStoryboard>
@@ -107,7 +110,7 @@
                 <BeginStoryboard>
                   <Storyboard TargetProperty="Background.Color">
                     <ColorAnimation Storyboard.TargetName="ButtonBorder"
-                                    To="{StaticResource BackgroundMouseOverDefault}" Duration="0:0:0.2" />
+                                    To="{StaticResource ButtonBackgroundMouseOverDefault}" Duration="0:0:0.2" />
                   </Storyboard>
                 </BeginStoryboard>
               </MultiTrigger.EnterActions>
@@ -129,7 +132,7 @@
                 <BeginStoryboard>
                   <Storyboard TargetProperty="Background.Color">
                     <ColorAnimation Storyboard.TargetName="ButtonBorder"
-                                    To="{StaticResource BackgroundMouseDownDefault}" Duration="0:0:0.1" />
+                                    To="{StaticResource ButtonBackgroundMouseDownDefault}" Duration="0:0:0.1" />
                   </Storyboard>
                 </BeginStoryboard>
               </MultiTrigger.EnterActions>
@@ -162,6 +165,29 @@
                 </Rectangle.Fill>
               </Rectangle>
             </Grid>
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="ToolTip" TargetType="{x:Type ToolTip}">
+    <Setter Property="Foreground">
+      <Setter.Value>
+        <SolidColorBrush Color="{StaticResource Text}" />
+      </Setter.Value>
+    </Setter>
+    <Setter Property="FontFamily" Value="Segoe UI" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="FontStyle" Value="Normal" />
+    <Setter Property="FontWeight" Value="DemiBold" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ToolTip}">
+          <Border Background="White" BorderThickness="2" BorderBrush="{StaticResource WindowBorderBrush}" Padding="5"
+                  CornerRadius="0">
+            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
           </Border>
         </ControlTemplate>
       </Setter.Value>

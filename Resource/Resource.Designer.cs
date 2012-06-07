@@ -70,6 +70,24 @@ namespace xlsdiff.Resource {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Close ähnelt.
+        /// </summary>
+        public static string BtnClose {
+            get {
+                return ResourceManager.GetString("BtnClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Minimize ähnelt.
+        /// </summary>
+        public static string BtnMinimize {
+            get {
+                return ResourceManager.GetString("BtnMinimize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Show ähnelt.
         /// </summary>
         public static string BtnShow {
@@ -156,6 +174,15 @@ namespace xlsdiff.Resource {
         public static string MsgFileTwice {
             get {
                 return ResourceManager.GetString("MsgFileTwice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Comparing files is still in progress. Are you sure you want to close the application? ähnelt.
+        /// </summary>
+        public static string MsgWorkingConfirmExit {
+            get {
+                return ResourceManager.GetString("MsgWorkingConfirmExit", resourceCulture);
             }
         }
     }

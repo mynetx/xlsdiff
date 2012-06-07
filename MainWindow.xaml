@@ -1,85 +1,111 @@
-﻿<Window x:Class="xlsdiff.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:resx="clr-namespace:xlsdiff.Resource"
-        Title="xlsdiff" 
-        Height="280" Width="700" WindowStartupLocation="CenterScreen"
-        MinHeight="280" MinWidth="700" WindowStyle="None" ResizeMode="NoResize" 
-        BorderBrush="{x:Static SystemColors.WindowFrameBrush}" BorderThickness="2" 
-        FontFamily="Segoe UI" FontSize="12">
-    <Window.Resources>
-        <SolidColorBrush x:Key="Colorizer" Color="#FF006400" />
-        <SolidColorBrush x:Key="Gray" Color="#CC000000" />
-    </Window.Resources>
-    <Grid Margin="10,5">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="21" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid Name="GrdTitlebar" MouseLeftButtonDown="TitlebarMouseLeftButtonDown" Background="White">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="48" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="24" />
-                <ColumnDefinition Width="24" />
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="1" Text="xlsdiff" Foreground="{StaticResource Colorizer}" HorizontalAlignment="Center" />
-            <Button Grid.Column="2" Style="{StaticResource CloseButton}" Name="BtnMinimize" Click="BtnMinimizeClick" />
-            <Button Grid.Column="3" Style="{StaticResource CloseButton}" Name="BtnClose" Click="BtnCloseClick" />
-        </Grid>
-        <Grid Name="GrdPage" Grid.Row="1" Margin="10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="60" />
-                <RowDefinition Height="30" />
-                <RowDefinition Height="20" />
-                <RowDefinition Height="20" />
-                <RowDefinition Height="20" />
-                <RowDefinition Height="4" />
-                <RowDefinition Height="20" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="35" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="20" />
-                <ColumnDefinition Width="35" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="20" />
-                <ColumnDefinition Width="35" />
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock Text="1" Foreground="{StaticResource Gray}" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" 
-                       FontSize="36" Padding="5,0,5,5" />
-            <TextBlock Text="{x:Static resx:Resource.LblFile1}" Foreground="{StaticResource Gray}" Grid.Row="0" Grid.Column="1" FontSize="12" 
-                       Margin="0,10,0,0" TextWrapping="Wrap" />
-            <Button Content="{x:Static resx:Resource.BtnBrowse}" Style="{StaticResource Button}"
-                    Name="BtnFile1" Grid.Row="1" Grid.Column="1" Click="BtnFile1Click" />
-            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1">
-                <TextBlock Foreground="{StaticResource Colorizer}" Name="LblFile1" MaxWidth="140" TextTrimming="CharacterEllipsis" />
-                <TextBlock Foreground="{StaticResource Colorizer}" Name="LblFile1Ext" />
-            </StackPanel>
-            
+﻿<Window x:Class="xlsdiff.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:resx="clr-namespace:xlsdiff.Resource" Title="xlsdiff"
+        Height="280" Width="700" WindowStartupLocation="CenterScreen" MinHeight="280" MinWidth="700" WindowStyle="None"
+        ResizeMode="NoResize" BorderBrush="{StaticResource WindowBorderBrush}" BorderThickness="2" FontFamily="Segoe UI"
+        FontSize="12" Loaded="WindowLoaded" RenderOptions.ClearTypeHint="Enabled">
 
-            <TextBlock Text="2" Foreground="{StaticResource Gray}" Grid.Row="0" Grid.Column="3" Grid.RowSpan="2" FontSize="36" Padding="5,0,5,5" />
-            <TextBlock Text="{x:Static resx:Resource.LblFile2}" Foreground="{StaticResource Gray}" Grid.Row="0" Grid.Column="4" 
-                       Margin="0,10,0,0" TextWrapping="Wrap" />
-            <Button Content="{x:Static resx:Resource.BtnBrowse}" Style="{StaticResource Button}" Name="BtnFile2" Grid.Row="1" Grid.Column="4" 
-                    Click="BtnFile2Click" />
-            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="4">
-                <TextBlock Foreground="{StaticResource Colorizer}" Name="LblFile2" MaxWidth="140" TextTrimming="CharacterEllipsis" />
-                <TextBlock Foreground="{StaticResource Colorizer}" Name="LblFile2Ext" />
-            </StackPanel>
+  <Window.Resources>
+    <Color x:Key="Colorizer">#FF006400</Color>
+    <SolidColorBrush x:Key="ColorizerBrush" Color="{StaticResource Colorizer}" />
+    <Color x:Key="Text">#CC000000</Color>
+    <SolidColorBrush x:Key="TextBrush" Color="{StaticResource Text}" />
+  </Window.Resources>
 
-            <TextBlock Text="3" Foreground="{StaticResource Gray}" Grid.Row="0" Grid.Column="6" Grid.RowSpan="2" FontSize="36" Padding="5,0,5,5" />
-            <TextBlock Text="{x:Static resx:Resource.LblShowChanges}" Foreground="{StaticResource Gray}" Grid.Row="0" Grid.Column="7" 
-                       Margin="0,10,0,0" TextWrapping="Wrap" />
-            <Button Content="{x:Static resx:Resource.BtnShow}" Style="{StaticResource Button}" 
-                    Background="{StaticResource Colorizer}" 
-                    Name="BtnShow" Grid.Row="1" Grid.Column="7" Click="BtnShowClick" IsEnabled="False" IsDefault="True" />
+  <Window.Triggers>
+    <EventTrigger RoutedEvent="Window.Loaded">
+      <BeginStoryboard>
+        <Storyboard TargetName="ContentWrapper" TargetProperty="Opacity">
+          <DoubleAnimation From="0.0" To="1.0" Duration="0:0:2">
+            <DoubleAnimation.EasingFunction>
+              <CubicEase EasingMode="EaseInOut" />
+            </DoubleAnimation.EasingFunction>
+          </DoubleAnimation>
+        </Storyboard>
+      </BeginStoryboard>
+    </EventTrigger>
+  </Window.Triggers>
 
-            <ProgressBar Name="PrgProgress" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="7" Visibility="Hidden"
-                         Style="{StaticResource ProgressBar}" />
-            <TextBlock Name="LblProgress" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="7" Visibility="Hidden" 
-                       Foreground="{StaticResource Gray}" VerticalAlignment="Center" TextTrimming="WordEllipsis" />
-        </Grid>
+  <Grid Margin="10,5" x:Name="ContentWrapper">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="21" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <Grid Name="GrdTitlebar" MouseLeftButtonDown="TitlebarMouseLeftButtonDown" Background="White">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="48" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="24" />
+        <ColumnDefinition Width="24" />
+      </Grid.ColumnDefinitions>
+      <TextBlock Grid.Column="1" Text="xlsdiff" Foreground="{StaticResource ColorizerBrush}" FontWeight="DemiBold"
+                 HorizontalAlignment="Center" />
+      <Button Grid.Column="2" Style="{StaticResource CloseButton}" Name="BtnMinimize" Click="BtnMinimizeClick">
+        <Button.ToolTip>
+          <ToolTip Style="{StaticResource ToolTip}" Content="{x:Static resx:Resource.BtnMinimize}" />
+        </Button.ToolTip>
+      </Button>
+      <Button Grid.Column="3" Style="{StaticResource CloseButton}" Name="BtnClose" Click="BtnCloseClick">
+        <Button.ToolTip>
+          <ToolTip Style="{StaticResource ToolTip}" Content="{x:Static resx:Resource.BtnClose}" />
+        </Button.ToolTip>
+      </Button>
     </Grid>
+    <Grid Name="GrdPage" Grid.Row="1" Margin="10">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="60" />
+        <RowDefinition Height="30" />
+        <RowDefinition Height="20" />
+        <RowDefinition Height="20" />
+        <RowDefinition Height="20" />
+        <RowDefinition Height="4" />
+        <RowDefinition Height="20" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="35" />
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="20" />
+        <ColumnDefinition Width="35" />
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="20" />
+        <ColumnDefinition Width="35" />
+        <ColumnDefinition Width="1*" />
+      </Grid.ColumnDefinitions>
+      <TextBlock Text="1" Foreground="{StaticResource ColorizerBrush}" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
+                 FontSize="36" Padding="5,0,5,5" />
+      <TextBlock Text="{x:Static resx:Resource.LblFile1}" Foreground="{StaticResource TextBrush}" Grid.Row="0"
+                 Grid.Column="1" FontSize="12" Margin="0,10,0,0" TextWrapping="Wrap" />
+      <Button Content="{x:Static resx:Resource.BtnBrowse}" Style="{StaticResource Button}" Name="BtnFile1" Grid.Row="1"
+              Grid.Column="1" Click="BtnFile1Click" />
+      <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1">
+        <TextBlock Foreground="{StaticResource ColorizerBrush}" Name="LblFile1" MaxWidth="140"
+                   TextTrimming="CharacterEllipsis" />
+        <TextBlock Foreground="{StaticResource ColorizerBrush}" Name="LblFile1Ext" />
+      </StackPanel>
+
+
+      <TextBlock Text="2" Foreground="{StaticResource ColorizerBrush}" Grid.Row="0" Grid.Column="3" Grid.RowSpan="2"
+                 FontSize="36" Padding="5,0,5,5" />
+      <TextBlock Text="{x:Static resx:Resource.LblFile2}" Foreground="{StaticResource TextBrush}" Grid.Row="0"
+                 Grid.Column="4" Margin="0,10,0,0" TextWrapping="Wrap" />
+      <Button Content="{x:Static resx:Resource.BtnBrowse}" Style="{StaticResource Button}" Name="BtnFile2" Grid.Row="1"
+              Grid.Column="4" Click="BtnFile2Click" />
+      <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="4">
+        <TextBlock Foreground="{StaticResource ColorizerBrush}" Name="LblFile2" MaxWidth="140"
+                   TextTrimming="CharacterEllipsis" />
+        <TextBlock Foreground="{StaticResource ColorizerBrush}" Name="LblFile2Ext" />
+      </StackPanel>
+
+      <TextBlock Text="3" Foreground="{StaticResource ColorizerBrush}" Grid.Row="0" Grid.Column="6" Grid.RowSpan="2"
+                 FontSize="36" Padding="5,0,5,5" />
+      <TextBlock Text="{x:Static resx:Resource.LblShowChanges}" Foreground="{StaticResource TextBrush}" Grid.Row="0"
+                 Grid.Column="7" Margin="0,10,0,0" TextWrapping="Wrap" />
+      <Button Content="{x:Static resx:Resource.BtnShow}" Style="{StaticResource Button}" Name="BtnShow" Grid.Row="1"
+              Grid.Column="7" Click="BtnShowClick" IsEnabled="False" IsDefault="True" />
+
+      <ProgressBar Name="PrgProgress" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="7" Visibility="Hidden"
+                   Style="{StaticResource ProgressBar}" />
+      <TextBlock Name="LblProgress" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="7" Visibility="Hidden"
+                 Foreground="{StaticResource TextBrush}" VerticalAlignment="Center" TextTrimming="WordEllipsis" />
+    </Grid>
+  </Grid>
 </Window>

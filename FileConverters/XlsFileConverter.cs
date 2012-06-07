@@ -1,8 +1,11 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
 using System.IO;
+using System.Threading;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace xlsdiff
 {
@@ -12,7 +15,7 @@ namespace xlsdiff
 
         protected string GetConnectionString()
         {
-            return string.Format("OLEDB;Provider=Microsoft.Jet.OLEDB.4.0;Data Source={0};Extended Properties=\"Excel 8.0;HDR=No;IMEX=1\";", Source);
+            return string.Format("Provider=Microsoft.Jet.OLEDB.4.0;Data Source={0};Extended Properties=\"Excel 8.0;HDR=No;IMEX=1\";", Source);
         }
 
         public new bool Convert(bool overwriteExistingTarget = false)
@@ -36,7 +39,7 @@ namespace xlsdiff
                 // load name of first worksheet
                 string strSheet = resConn.GetSchema("Tables").Rows[0]["TABLE_NAME"].ToString();
 
-                objCommand = new OleDbCommand("SELECT * FROM [" + strSheet + "$]", resConn)
+                objCommand = new OleDbCommand("SELECT * FROM [" + strSheet + "]", resConn)
                                  {CommandType = CommandType.Text};
                 resTarget = new StreamWriter(Target);
 
@@ -50,7 +53,8 @@ namespace xlsdiff
                 {
                     if (intRow % 10 == 0)
                     {
-                        ConversionProgressUpdated((int) (intRow / (float) intRows * 100));
+                        ConversionProgressUpdated((int) (intRow/(float) intRows*100));
+                        Thread.Sleep(100);
                     }
 
                     string rowString = "";
@@ -60,6 +64,7 @@ namespace xlsdiff
                     }
                     resTarget.WriteLine(rowString);
                 }
+                ConversionProgressUpdated(100);
             }
             catch (Exception exc)
             {
