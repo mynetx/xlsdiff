@@ -126,8 +126,8 @@
   <data name="DlgExcelFiles" xml:space="preserve">
     <value>Excel-Dateien</value>
   </data>
-  <data name="LblComparingFiles" xml:space="preserve">
-    <value>Dateien werden verglichen…</value>
+  <data name="LblComparingFilesXPercent" xml:space="preserve">
+    <value>Dateien vergleichen… {0}%</value>
   </data>
   <data name="LblFile1" xml:space="preserve">
     <value>Original-Excel-Datei wählen</value>
@@ -135,11 +135,11 @@
   <data name="LblFile2" xml:space="preserve">
     <value>Geänderte Excel-Datei wählen</value>
   </data>
-  <data name="LblReadingFileX" xml:space="preserve">
-    <value>Datei {0} wird gelesen…</value>
+  <data name="LblPreparing" xml:space="preserve">
+    <value>Vorbereiten…</value>
   </data>
   <data name="LblReadingFileXPercent" xml:space="preserve">
-    <value>Datei {0} wird gelesen… {1}%</value>
+    <value>Datei {0} lesen… {1}%</value>
   </data>
   <data name="LblShowChanges" xml:space="preserve">
     <value>Änderungen zwischen Dateien anzeigen</value>

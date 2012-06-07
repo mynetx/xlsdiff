@@ -5,9 +5,15 @@ namespace xlsdiff
 {
     public class FileConverter
     {
+        #region Delegates
+
         public delegate void ConversionProgressUpdatedEventHandler(int intPercentage);
 
+        #endregion
+
         private string _strSource;
+
+        private string _strTarget;
 
         public string Source
         {
@@ -22,9 +28,6 @@ namespace xlsdiff
             }
         }
 
-        private string _strTarget;
-        private bool _boolTargetIsTemp;
-
         public string Target
         {
             get
@@ -33,15 +36,10 @@ namespace xlsdiff
                 {
                     _strTarget = Path.GetTempFileName();
                     new FileInfo(_strTarget) {Attributes = FileAttributes.Temporary};
-                    _boolTargetIsTemp = true;
                 }
                 return _strTarget;
             }
-            set
-            {
-                _strTarget = value;
-                _boolTargetIsTemp = false;
-            }
+            set { _strTarget = value; }
         }
 
         public FileType TargetType { get; set; }
@@ -51,18 +49,50 @@ namespace xlsdiff
             throw new NotImplementedException();
         }
 
-        ~FileConverter()
+        public static string ConvertFile(string strFile, FileType typeFile,
+                                         ConversionProgressUpdatedEventHandler fnProgressUpdated)
         {
-            if (_boolTargetIsTemp)
+            switch (typeFile)
             {
-                try
-                {
-                    File.Delete(Target);
-                }
-                catch
-                {
-                    ; // well, if the tempfile cannot be deleted, then leave it
-                }
+                case FileType.Xls:
+                    {
+                        var objConvert = new XlsFileConverter {Source = strFile, TargetType = FileType.Csv};
+                        objConvert.ConversionProgressUpdated += fnProgressUpdated;
+                        try
+                        {
+                            objConvert.Convert();
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        return objConvert.Target;
+                    }
+                case FileType.Xlsx:
+                    {
+                        var objConvert = new XlsxFileConverter {Source = strFile, TargetType = FileType.Csv};
+                        objConvert.ConversionProgressUpdated += fnProgressUpdated;
+                        try
+                        {
+                            objConvert.Convert();
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        return objConvert.Target;
+                    }
+                case FileType.Csv:
+                    {
+                        var objConvert = new CsvFileConverter {Source = strFile, TargetType = FileType.Csv};
+                        objConvert.ConversionProgressUpdated += fnProgressUpdated;
+                        try
+                        {
+                            objConvert.Convert();
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        return objConvert.Target;
+                    }
             }
         }
     }

@@ -10,6 +10,11 @@ namespace xlsdiff
     {
         public event ConversionProgressUpdatedEventHandler ConversionProgressUpdated;
 
+        protected string GetConnectionString()
+        {
+            return string.Format("OLEDB;Provider=Microsoft.Jet.OLEDB.4.0;Data Source={0};Extended Properties=\"Excel 8.0;HDR=No;IMEX=1\";", Source);
+        }
+
         public new bool Convert(bool overwriteExistingTarget = false)
         {
             if (Source == null)
@@ -18,8 +23,7 @@ namespace xlsdiff
             }
 
             // create ADO.NET connection to the XLS file
-            string strConn = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + Source +
-                             ";Extended Properties=\" Excel.0;HDR=Yes;IMEX=1\"";
+            string strConn = GetConnectionString();
             OleDbConnection resConn = null;
             StreamWriter resTarget = null;
             OleDbCommand objCommand = null;

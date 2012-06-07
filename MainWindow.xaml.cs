@@ -13,6 +13,7 @@ namespace xlsdiff
     /// </summary>
     public partial class MainWindow
     {
+        private string _strCurrentFile = "";
         private string _strFile1 = "";
         private string _strFile2 = "";
         private FileType _typeFile1;
@@ -145,56 +146,26 @@ namespace xlsdiff
             BtnFile1.IsEnabled = BtnFile2.IsEnabled = BtnShow.IsEnabled = false;
 
             // show some progress
+            PrgProgress.Value = 5;
+            LblProgress.Text = Resource.Resource.LblPreparing;
             PrgProgress.Visibility = LblProgress.Visibility = Visibility.Visible;
 
-            // progress for file 1
-            LblProgress.Text = string.Format(Resource.Resource.LblReadingFileX, 1);
-            PrgProgress.Value = 5;
+            // file 1
+            _strCurrentFile = "1";
+            FileConverter.ConvertFile(_strFile1, _typeFile1, ConversionProgressHandler);
 
-            switch (_typeFile1)
-            {
-                case FileType.Xls:
-                    var objConvert = new XlsFileConverter {Source = _strFile1, TargetType = FileType.Csv};
-                    objConvert.ConversionProgressUpdated += ConversionProgressHandlerFile1;
-                    try
-                    {
-                        objConvert.Convert();
-                    }
-                    catch (Exception)
-                    {
-                    }
-                    break;
-            }
+            _strCurrentFile = "2";
+            FileConverter.ConvertFile(_strFile2, _typeFile2, ConversionProgressHandler);
 
-            switch (_typeFile2)
-            {
-                case FileType.Xls:
-                    var objConvert = new XlsFileConverter {Source = _strFile2, TargetType = FileType.Csv};
-                    objConvert.ConversionProgressUpdated += ConversionProgressHandlerFile2;
-                    try
-                    {
-                        objConvert.Convert();
-                    }
-                    catch (Exception)
-                    {
-                    }
-                    break;
-            }
             MessageBox.Show("done");
         }
 
-        private void ConversionProgressHandlerFile1(int intPercentage)
+        private void ConversionProgressHandler(int intPercentage)
         {
-            PrgProgress.Value = 5 + 25*(intPercentage/100);
-            LblProgress.Text = string.Format(Resource.Resource.LblReadingFileXPercent, 1, intPercentage);
-            MessageBox.Show("1" + intPercentage.ToString(CultureInfo.InvariantCulture));
-        }
-
-        private void ConversionProgressHandlerFile2(int intPercentage)
-        {
-            PrgProgress.Value = 30 + 25*(intPercentage/100);
-            LblProgress.Text = string.Format(Resource.Resource.LblReadingFileXPercent, 2, intPercentage);
-            MessageBox.Show("2" + intPercentage.ToString(CultureInfo.InvariantCulture));
+            int intStartPercentage = _strCurrentFile == "1" ? 5 : 30;
+            PrgProgress.Value = intStartPercentage + 25*(intPercentage/100);
+            LblProgress.Text = string.Format(Resource.Resource.LblReadingFileXPercent, _strCurrentFile, intPercentage);
+            MessageBox.Show(_strCurrentFile + intPercentage.ToString(CultureInfo.InvariantCulture));
         }
     }
 }
