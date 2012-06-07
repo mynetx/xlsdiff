@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -179,18 +180,21 @@ namespace xlsdiff
                     }
                     break;
             }
+            MessageBox.Show("done");
         }
 
         private void ConversionProgressHandlerFile1(int intPercentage)
         {
             PrgProgress.Value = 5 + 25*(intPercentage/100);
             LblProgress.Text = string.Format(Resource.Resource.LblReadingFileXPercent, 1, intPercentage);
+            MessageBox.Show("1" + intPercentage.ToString(CultureInfo.InvariantCulture));
         }
 
         private void ConversionProgressHandlerFile2(int intPercentage)
         {
             PrgProgress.Value = 30 + 25*(intPercentage/100);
             LblProgress.Text = string.Format(Resource.Resource.LblReadingFileXPercent, 2, intPercentage);
+            MessageBox.Show("2" + intPercentage.ToString(CultureInfo.InvariantCulture));
         }
     }
 }
