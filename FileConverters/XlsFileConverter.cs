@@ -10,7 +10,7 @@ namespace xlsdiff
     {
         public event ConversionProgressUpdatedEventHandler ConversionProgressUpdated;
 
-        protected string GetConnectionString()
+        protected virtual string GetConnectionString()
         {
             return
                 string.Format(
@@ -78,6 +78,7 @@ namespace xlsdiff
                 if (! BoolCancel)
                 {
                     MessageBox.Show(exc.ToString());
+                    throw;
                 }
             }
             finally
