@@ -1,4 +1,4 @@
 xlsdiff
 =======
 
-Shows changes between XLS files
+Show changes between Excel files

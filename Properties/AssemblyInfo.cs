@@ -8,7 +8,7 @@ using System.Windows;
 // die mit einer Assembly verknüpft sind.
 
 [assembly: AssemblyTitle("xlsdiff")]
-[assembly: AssemblyDescription("Shows changes in Excel files.")]
+[assembly: AssemblyDescription("Show changes between Excel files")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ZweiSteinSoft")]
 [assembly: AssemblyProduct("xlsdiff")]
@@ -53,6 +53,6 @@ using System.Windows;
 // übernehmen, indem Sie "*" eingeben:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("0.9.025.0059")]
-[assembly: AssemblyFileVersion("0.9.025.0059")]
+[assembly: AssemblyVersion("0.9.030.2211")]
+[assembly: AssemblyFileVersion("0.9.030.2211")]
 [assembly: NeutralResourcesLanguage("en-US")]
