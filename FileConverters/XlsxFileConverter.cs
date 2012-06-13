@@ -1,6 +1,6 @@
 ﻿namespace xlsdiff
 {
-    public class XlsxFileConverter : XlsFileConverter
+    internal class XlsxFileConverter : XlsFileConverter
     {
         protected override string GetConnectionString()
         {

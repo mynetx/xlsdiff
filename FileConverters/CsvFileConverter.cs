@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace xlsdiff
 {
-    public class CsvFileConverter : FileConverter
+    internal class CsvFileConverter : FileConverter
     {
         public event ConversionProgressUpdatedEventHandler ConversionProgressUpdated;
 

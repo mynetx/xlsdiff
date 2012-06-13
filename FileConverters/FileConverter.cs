@@ -3,7 +3,7 @@ using System.IO;
 
 namespace xlsdiff
 {
-    public class FileConverter
+    internal class FileConverter
     {
         #region Delegates
 

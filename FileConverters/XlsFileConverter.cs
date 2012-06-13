@@ -6,7 +6,7 @@ using System.Windows;
 
 namespace xlsdiff
 {
-    public class XlsFileConverter : FileConverter
+    internal class XlsFileConverter : FileConverter
     {
         public event ConversionProgressUpdatedEventHandler ConversionProgressUpdated;
 
@@ -66,7 +66,12 @@ namespace xlsdiff
                     string rowString = "";
                     for (int y = 0; y < objTable.Columns.Count; y++)
                     {
-                        rowString += "\"" + objTable.Rows[intRow][y] + "\",";
+                        rowString += "\"" + objTable.Rows[intRow][y] + "\";";
+                    }
+                    // remove last semicolon in line
+                    if (rowString.Length > 0)
+                    {
+                        rowString = rowString.Substring(0, rowString.Length - 1);
                     }
                     resTarget.WriteLine(rowString);
                 }
