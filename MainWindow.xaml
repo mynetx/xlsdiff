@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:resx="clr-namespace:xlsdiff.Resource" Title="xlsdiff"
         Height="280" Width="700" WindowStartupLocation="CenterScreen" MinHeight="280" MinWidth="700" WindowStyle="None"
         ResizeMode="NoResize" BorderBrush="{StaticResource WindowBorderBrush}" BorderThickness="1" FontFamily="Segoe UI"
-        FontSize="12" Loaded="WindowLoaded" RenderOptions.ClearTypeHint="Enabled">
+        FontSize="12" Loaded="WindowLoaded" RenderOptions.ClearTypeHint="Enabled" Icon="/xlsdiff;component/Resource/xlsdiff.ico">
 
   <Window.Resources>
     <Color x:Key="Colorizer">#FF006400</Color>
@@ -52,7 +52,7 @@
             <ContentControl ContentTemplate="{StaticResource AppIcon}" Grid.Column="0" />
             <TextBlock Grid.Column="2" Text="xlsdiff" Foreground="{StaticResource ColorizerBrush}" FontWeight="DemiBold"
                  HorizontalAlignment="Center" />
-      <Button Grid.Column="3" Style="{StaticResource CloseButton}" Name="BtnMinimize" Click="BtnMinimizeClick">
+            <Button Grid.Column="3" Style="{StaticResource MinimizeButton}" Name="BtnMinimize" Click="BtnMinimizeClick">
         <Button.ToolTip>
           <ToolTip Style="{StaticResource ToolTip}" Content="{x:Static resx:Resource.BtnMinimize}" />
         </Button.ToolTip>
