@@ -53,6 +53,6 @@ using System.Windows;
 // übernehmen, indem Sie "*" eingeben:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("0.9.100.1924")]
-[assembly: AssemblyFileVersion("0.9.100.1924")]
+[assembly: AssemblyVersion("0.9.100.1927")]
+[assembly: AssemblyFileVersion("0.9.100.1927")]
 [assembly: NeutralResourcesLanguage("en-US")]
