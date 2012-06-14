@@ -135,6 +135,9 @@
   <data name="DlgExcelFiles" xml:space="preserve">
     <value>Excel-Dateien</value>
   </data>
+  <data name="LblComparingFiles" xml:space="preserve">
+    <value>Dateien vergleichen…</value>
+  </data>
   <data name="LblComparingFilesXPercent" xml:space="preserve">
     <value>Dateien vergleichen… {0}%</value>
   </data>
@@ -143,6 +146,9 @@
   </data>
   <data name="LblFile2" xml:space="preserve">
     <value>Geänderte Excel-Datei wählen</value>
+  </data>
+  <data name="LblOpeningResult" xml:space="preserve">
+    <value>Ergebnis öffnen…</value>
   </data>
   <data name="LblPreparing" xml:space="preserve">
     <value>Vorbereiten…</value>

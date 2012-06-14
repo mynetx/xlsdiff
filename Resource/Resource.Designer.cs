@@ -115,6 +115,15 @@ namespace xlsdiff.Resource {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Comparing files… ähnelt.
+        /// </summary>
+        public static string LblComparingFiles {
+            get {
+                return ResourceManager.GetString("LblComparingFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Comparing files… {0}% ähnelt.
         /// </summary>
         public static string LblComparingFilesXPercent {
@@ -138,6 +147,15 @@ namespace xlsdiff.Resource {
         public static string LblFile2 {
             get {
                 return ResourceManager.GetString("LblFile2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Opening result… ähnelt.
+        /// </summary>
+        public static string LblOpeningResult {
+            get {
+                return ResourceManager.GetString("LblOpeningResult", resourceCulture);
             }
         }
         

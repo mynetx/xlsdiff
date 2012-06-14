@@ -62,9 +62,13 @@ class diff {
     }
 
     function formatcode($code){
+        if (strlen($code) > 1) {
+            $code = substr($code, 1, strlen($code) - 2);
+        }
         $code = htmlentities($code);
         $code = str_replace(" ",'&nbsp;',$code);
         $code = str_replace("\t",'&nbsp;&nbsp;&nbsp;&nbsp;',$code);
+        $code = str_replace('&quot;;&quot;','</td><td>',$code);
         return $code;
     }
 
@@ -77,9 +81,7 @@ class diff {
 
         $start = (($line - $this->linepadding) > 0) ? ($line - $this->linepadding) : 0;
         $end = ($line + $this->linepadding);
-        //echo '<br />'.$line.': '.$start.': '.$end;
         $search = range($start,$end);
-        //pr($search);
         foreach($search as $k){
             if (in_array($k,$this->changes)) return true;
         }
@@ -113,9 +115,9 @@ class diff {
                             if ($insert) $class = '';
                             $insert = false;
                         }
-                        $ret.= '<tr><th>'.$count_old.'</th>';
+                        $ret.= '<tr class="del '.$class.'"><th>'.$count_old.'</th>';
                         $ret.= '<th>&nbsp;</th>';
-                        $ret.= '<td class="del '.$class.'">'.$this->formatcode($val).'</td>';
+                        $ret.= '<td>'.$this->formatcode($val).'</td>';
                         $ret.= '</tr>';
                         $count_old++;
                     }
@@ -127,9 +129,9 @@ class diff {
                             if ($delete) $class = '';
                             $delete = false;
                         }
-                        $ret.= '<tr><th>&nbsp;</th>';
+                        $ret.= '<tr class="ins '.$class.'"><th>&nbsp;</th>';
                         $ret.= '<th>'.$count_new.'</th>';
-                        $ret.= '<td class="ins '.$class.'">'.$this->formatcode($val).'</td>';
+                        $ret.= '<td>'.$this->formatcode($val).'</td>';
                         $ret.= '</tr>';
                         $count_new++;
                     }
@@ -138,9 +140,9 @@ class diff {
                     $class = ($insert) ? 'ins_end' : $class;
                     $delete = false;
                     $insert = false;
-                    $ret.= '<tr><th>'.$count_old.'</th>';
+                    $ret.= '<tr class="'.$class.'"><th>'.$count_old.'</th>';
                     $ret.= '<th>'.$count_new.'</th>';
-                    $ret.= '<td class="'.$class.'">'.$this->formatcode($k).'</td>';
+                    $ret.= '<td>'.$this->formatcode($k).'</td>';
                     $ret.= '</tr>';
                     $count_old++;
                     $count_new++;
@@ -153,9 +155,9 @@ class diff {
 
                 if (!$truncate){
                     $truncate = true;
-                    $ret.= '<tr><th>...</th>';
+                    $ret.= '<tr class="truncated '.$class.'"><th>...</th>';
                     $ret.= '<th>...</th>';
-                    $ret.= '<td class="truncated '.$class.'">&nbsp;</td>';
+                    $ret.= '<td>&nbsp;</td>';
                     $ret.= '</tr>';
                 }
                 $count_old++;
@@ -202,29 +204,25 @@ table.code td {
     padding: 1px 2px;
 }
 
-table.code td.del {
+table.code tr.del td {
     background-color: #FDD;
-    border-left: 1px solid #C00;
-    border-right: 1px solid #C00;
 }
-table.code td.del.first {
+table.code tr.del.first td {
     border-top: 1px solid #C00;
 }
-table.code td.ins {
+table.code tr.ins td {
     background-color: #DFD;
-    border-left: 1px solid #0A0;
-    border-right: 1px solid #0A0;
 }
-table.code td.ins.first {
+table.code tr.ins.first td {
     border-top: 1px solid #0A0;
 }
-table.code td.del_end {
+table.code tr.del_end td {
     border-top: 1px solid #C00;
 }
-table.code td.ins_end {
+table.code tr.ins_end td {
     border-top: 1px solid #0A0;
 }
-table.code td.truncated {
+table.code tr.truncated td {
     background-color: #f7f7f7;
 }
 </style>

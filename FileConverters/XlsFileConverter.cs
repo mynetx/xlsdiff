@@ -57,7 +57,7 @@ namespace xlsdiff
                     {
                         ConversionProgressUpdated(intRow/(double) intRows*100);
                         // check if we are to cancel the operation
-                        if (BoolCancel)
+                        if (MainWindow.BoolCancel)
                         {
                             throw new Exception();
                         }
@@ -80,7 +80,7 @@ namespace xlsdiff
             }
             catch (Exception exc)
             {
-                if (! BoolCancel)
+                if (!MainWindow.BoolCancel)
                 {
                     MessageBox.Show(exc.ToString());
                     throw;

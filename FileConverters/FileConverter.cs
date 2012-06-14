@@ -11,8 +11,6 @@ namespace xlsdiff
 
         #endregion
 
-        public static bool BoolCancel;
-
         private string _strSource;
 
         private string _strTarget;
