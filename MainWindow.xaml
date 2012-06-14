@@ -9,7 +9,18 @@
     <SolidColorBrush x:Key="ColorizerBrush" Color="{StaticResource Colorizer}" />
     <Color x:Key="Text">#CC000000</Color>
     <SolidColorBrush x:Key="TextBrush" Color="{StaticResource Text}" />
-  </Window.Resources>
+        <DataTemplate x:Key="AppIcon">
+            <Canvas x:Name="XAML" Width="128" Height="128">
+                <Canvas.LayoutTransform>
+                    <ScaleTransform ScaleX=".125" ScaleY=".125"/>
+                </Canvas.LayoutTransform>
+                    <Rectangle x:Name="Rectangle" Width="128" Height="128" Canvas.Left="0" Canvas.Top="0" Stretch="Fill" StrokeThickness="2" StrokeMiterLimit="2.75" Stroke="#FF000000" Fill="#FFD8D8D8"/>
+                    <Rectangle x:Name="Rectangle_0" Width="120" Height="120" Canvas.Left="4" Canvas.Top="4" Stretch="Fill" StrokeThickness="2" StrokeMiterLimit="2.75" Stroke="#FF000000" Fill="#FFD8D8D8"/>
+                    <Rectangle x:Name="Rectangle_1" Width="74" Height="19" Canvas.Left="27" Canvas.Top="37" Stretch="Fill" StrokeThickness="1" StrokeMiterLimit="2.75" Stroke="#FF000000" Fill="#FFCC0000"/>
+                    <Rectangle x:Name="Rectangle_2" Width="74" Height="19" Canvas.Left="27" Canvas.Top="71.5" Stretch="Fill" StrokeThickness="1" StrokeMiterLimit="2.75" Stroke="#FF000000" Fill="#FF00AA00"/>
+                </Canvas>
+        </DataTemplate>
+    </Window.Resources>
 
   <Window.Triggers>
     <EventTrigger RoutedEvent="Window.Loaded">
@@ -31,20 +42,22 @@
       <RowDefinition Height="*" />
     </Grid.RowDefinitions>
     <Grid Name="GrdTitlebar" MouseLeftButtonDown="TitlebarMouseLeftButtonDown" Background="White">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="48" />
-        <ColumnDefinition Width="*" />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="24" />
+                <ColumnDefinition Width="24" />
+                <ColumnDefinition Width="*" />
         <ColumnDefinition Width="24" />
         <ColumnDefinition Width="24" />
       </Grid.ColumnDefinitions>
-      <TextBlock Grid.Column="1" Text="xlsdiff" Foreground="{StaticResource ColorizerBrush}" FontWeight="DemiBold"
+            <ContentControl ContentTemplate="{StaticResource AppIcon}" Grid.Column="0" />
+            <TextBlock Grid.Column="2" Text="xlsdiff" Foreground="{StaticResource ColorizerBrush}" FontWeight="DemiBold"
                  HorizontalAlignment="Center" />
-      <Button Grid.Column="2" Style="{StaticResource CloseButton}" Name="BtnMinimize" Click="BtnMinimizeClick">
+      <Button Grid.Column="3" Style="{StaticResource CloseButton}" Name="BtnMinimize" Click="BtnMinimizeClick">
         <Button.ToolTip>
           <ToolTip Style="{StaticResource ToolTip}" Content="{x:Static resx:Resource.BtnMinimize}" />
         </Button.ToolTip>
       </Button>
-      <Button Grid.Column="3" Style="{StaticResource CloseButton}" Name="BtnClose" Click="BtnCloseClick">
+      <Button Grid.Column="4" Style="{StaticResource CloseButton}" Name="BtnClose" Click="BtnCloseClick">
         <Button.ToolTip>
           <ToolTip Style="{StaticResource ToolTip}" Content="{x:Static resx:Resource.BtnClose}" />
         </Button.ToolTip>
