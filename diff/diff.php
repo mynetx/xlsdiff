@@ -62,7 +62,8 @@ class diff {
     }
 
     function formatcode($code){
-        if (strlen($code) > 1) {
+        $code = trim($code);
+        if (strlen($code) > 2) {
             $code = substr($code, 1, strlen($code) - 2);
         }
         $code = htmlentities($code);
