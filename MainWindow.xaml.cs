@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Security.Permissions;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,6 +16,12 @@ namespace xlsdiff
     /// </summary>
     public partial class MainWindow
     {
+        private const string StrProductCode = @"{58532E1E-8DB2-4E99-A883-BA84E4A0FC60}";
+        internal static bool BoolCancel;
+        private static readonly string StrDiffFolder = AppDomain.CurrentDomain.BaseDirectory + @"diff\";
+        private static readonly string StrPhpInterpreter = StrDiffFolder + @"php.exe";
+        private static readonly string StrDiffScript = StrDiffFolder + @"diff.php";
+        private static readonly string[] ArrComponentFiles = {StrPhpInterpreter, StrDiffScript};
         private double _dblPercentageFile1;
         private string _strCurrentFile = "";
         private string _strFile1 = "";
@@ -23,7 +31,20 @@ namespace xlsdiff
 
         public MainWindow()
         {
+            // check if diff parser exists
+            RepairIfNecessary();
             InitializeComponent();
+        }
+
+        private void RepairIfNecessary()
+        {
+            foreach (string strFile in ArrComponentFiles.Where(strFile => !File.Exists(strFile)))
+            {
+                MessageBox.Show(Resource.Resource.MsgAppComponentMissing, "xlsdiff", MessageBoxButton.OK,
+                                MessageBoxImage.Warning);
+                Process.Start(@"msiexec.exe", @"/passive /norestart /fa " + StrProductCode);
+                Hide();
+            }
         }
 
         private void WindowLoaded(object sender, RoutedEventArgs e)
@@ -54,25 +75,72 @@ namespace xlsdiff
 
             // file 2
             string strTarget2 = "";
-            if (!FileConverter.BoolCancel)
+            if (!BoolCancel)
             {
                 _strCurrentFile = "2";
                 strTarget2 = FileConverter.ConvertFile(_strFile2, _typeFile2, ConversionProgressHandler);
             }
 
-            if (!FileConverter.BoolCancel)
+            if (!BoolCancel)
             {
-                MessageBox.Show(strTarget1 + "\r\n" + strTarget2);
+                PrgProgress.Value += 5;
+                LblProgress.Text = Resource.Resource.LblComparingFiles;
+                DoEvents();
+
+                // get temporary file name
+                string strDiffFile = Path.GetTempPath() + Guid.NewGuid() + ".html";
+
+                // diff the two files
+                var objDiffProcess = new Process
+                                         {
+                                             StartInfo =
+                                                 {
+                                                     FileName = StrPhpInterpreter,
+                                                     WorkingDirectory = Path.GetDirectoryName(StrPhpInterpreter),
+                                                     Arguments =
+                                                         string.Format("\"{0}\" \"{1}\" \"{2}\" \"{3}\"",
+                                                                       "diff.php",
+                                                                       strTarget1,
+                                                                       strTarget2,
+                                                                       strDiffFile),
+                                                     CreateNoWindow = true,
+                                                     WindowStyle = ProcessWindowStyle.Hidden
+                                                 }
+                                         };
+                objDiffProcess.Start();
+
+                while (! objDiffProcess.HasExited)
+                {
+                    DoEvents();
+                    if (BoolCancel)
+                    {
+                        objDiffProcess.Kill();
+                    }
+                }
+                // check process exit code
+                // launch diff result in default browser
+                if (objDiffProcess.ExitCode == 0 && File.Exists(strDiffFile))
+                {
+                    PrgProgress.Value = 95;
+                    LblProgress.Text = Resource.Resource.LblOpeningResult;
+                    DoEvents();
+
+                    Process.Start(strDiffFile);
+
+                    PrgProgress.Value = 100;
+                    LblProgress.Text = "";
+                    DoEvents();
+                }
             }
 
-            FileConverter.BoolCancel = false;
+            BoolCancel = false;
             BtnFile1.IsEnabled = BtnFile2.IsEnabled = BtnShow.IsEnabled = true;
             PrgProgress.Visibility = LblProgress.Visibility = BtnCancel.Visibility = Visibility.Hidden;
         }
 
         private void BtnCancelClick(object sender, RoutedEventArgs e)
         {
-            FileConverter.BoolCancel = true;
+            BoolCancel = true;
             BtnFile1.IsEnabled = BtnFile2.IsEnabled = BtnShow.IsEnabled = true;
             PrgProgress.Visibility = LblProgress.Visibility = BtnCancel.Visibility = Visibility.Hidden;
         }
@@ -176,7 +244,7 @@ namespace xlsdiff
                           {
                               FileName = "",
                               DefaultExt = ".xls",
-                              Filter = Resource.Resource.DlgExcelFiles + "|*.xls;*.xlsx;*.csv"
+                              Filter = Resource.Resource.DlgExcelFiles + "|*.xls;*.xlsx"
                           };
             do
             {
