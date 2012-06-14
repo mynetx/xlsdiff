@@ -187,6 +187,15 @@ namespace xlsdiff.Resource {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die An app component is missing. To restore it, the app will now get repaired. ähnelt.
+        /// </summary>
+        public static string MsgAppComponentMissing {
+            get {
+                return ResourceManager.GetString("MsgAppComponentMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {0} is not a supported Excel file. Please choose a different file. ähnelt.
         /// </summary>
         public static string MsgFileFormat {

@@ -159,6 +159,9 @@
   <data name="LblShowChanges" xml:space="preserve">
     <value>Änderungen zwischen Dateien anzeigen</value>
   </data>
+  <data name="MsgAppComponentMissing" xml:space="preserve">
+    <value>Eine Komponente der App fehlt. Um sie wiederherzustellen, wird die App nun repariert.</value>
+  </data>
   <data name="MsgFileFormat" xml:space="preserve">
     <value>{0} ist keine unterstützte Excel-Datei. Bitte wählen Sie eine andere Datei.</value>
   </data>
