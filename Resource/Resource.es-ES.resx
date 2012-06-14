@@ -147,6 +147,12 @@
   <data name="LblFile2" xml:space="preserve">
     <value>Elegir archivo de Excel cambiado</value>
   </data>
+  <data name="LblNew" xml:space="preserve">
+    <value>Nuevo</value>
+  </data>
+  <data name="LblOld" xml:space="preserve">
+    <value>Viejo</value>
+  </data>
   <data name="LblOpeningResult" xml:space="preserve">
     <value>Abriendo resultado…</value>
   </data>

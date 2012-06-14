@@ -151,6 +151,24 @@ namespace xlsdiff.Resource {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die New ähnelt.
+        /// </summary>
+        public static string LblNew {
+            get {
+                return ResourceManager.GetString("LblNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Old ähnelt.
+        /// </summary>
+        public static string LblOld {
+            get {
+                return ResourceManager.GetString("LblOld", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Opening result… ähnelt.
         /// </summary>
         public static string LblOpeningResult {

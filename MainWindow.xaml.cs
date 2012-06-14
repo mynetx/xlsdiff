@@ -98,11 +98,13 @@ namespace xlsdiff
                                                      FileName = StrPhpInterpreter,
                                                      WorkingDirectory = Path.GetDirectoryName(StrPhpInterpreter),
                                                      Arguments =
-                                                         string.Format("\"{0}\" \"{1}\" \"{2}\" \"{3}\"",
+                                                         string.Format("\"{0}\" \"{1}\" \"{2}\" \"{3}\" \"{4}\" \"{5}\"",
                                                                        "diff.php",
                                                                        strTarget1,
                                                                        strTarget2,
-                                                                       strDiffFile),
+                                                                       strDiffFile,
+                                                                       Resource.Resource.LblOld,
+                                                                       Resource.Resource.LblNew),
                                                      CreateNoWindow = true,
                                                      WindowStyle = ProcessWindowStyle.Hidden
                                                  }

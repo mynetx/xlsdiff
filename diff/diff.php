@@ -94,7 +94,7 @@ class diff {
         $this->linepadding = $linepadding;
 
         $ret = '<pre><table width="100%" border="0" cellspacing="0" cellpadding="0" class="code">';
-        $ret.= '<tr><td>Old</td><td>New</td><td></td></tr>';
+        $ret.= '<tr><td>' . STR_OLD . '</td><td>' . STR_NEW . '</td><td></td></tr>';
         $count_old = 1;
         $count_new = 1;
 
@@ -237,9 +237,12 @@ if (isset($argv)) {
     $arguments = $argv;
 }
 
-if (count($arguments) < 4) {
+if (count($arguments) < 6) {
     die();
 }
+
+define('STR_OLD', $arguments[4]);
+define('STR_NEW', $arguments[5]);
 
 $diff = new diff;
 $text = $diff->style() . $diff->inline($arguments[1], $arguments[2], 2);

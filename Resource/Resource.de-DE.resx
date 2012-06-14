@@ -147,6 +147,12 @@
   <data name="LblFile2" xml:space="preserve">
     <value>Geänderte Excel-Datei wählen</value>
   </data>
+  <data name="LblNew" xml:space="preserve">
+    <value>Neu</value>
+  </data>
+  <data name="LblOld" xml:space="preserve">
+    <value>Alt</value>
+  </data>
   <data name="LblOpeningResult" xml:space="preserve">
     <value>Ergebnis öffnen…</value>
   </data>
