@@ -135,6 +135,16 @@ namespace xlsdiff
                 }
             }
 
+            // clean up the converted temp files
+            try
+            {
+                File.Delete(strTarget1);
+                File.Delete(strTarget2);
+            }
+            catch
+            {
+            }
+
             BoolCancel = false;
             BtnFile1.IsEnabled = BtnFile2.IsEnabled = BtnShow.IsEnabled = true;
             PrgProgress.Visibility = LblProgress.Visibility = BtnCancel.Visibility = Visibility.Hidden;
