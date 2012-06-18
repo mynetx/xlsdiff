@@ -206,22 +206,23 @@ table.code td {
 }
 
 table.code tr.del td {
-    background-color: #FDD;
+    background-color: #F99;
+    color: #900;
 }
 table.code tr.del.first td {
-    border-top: 1px solid #C00;
+    border-top: 1px solid #900;
 }
 table.code tr.ins td {
-    background-color: #DFD;
+    background-color: #8f8;
 }
 table.code tr.ins.first td {
-    border-top: 1px solid #0A0;
+    border-top: 1px solid #090;
 }
 table.code tr.del_end td {
-    border-top: 1px solid #C00;
+    border-top: 1px solid #900;
 }
 table.code tr.ins_end td {
-    border-top: 1px solid #0A0;
+    border-top: 1px solid #090;
 }
 table.code tr.truncated td {
     background-color: #f7f7f7;
