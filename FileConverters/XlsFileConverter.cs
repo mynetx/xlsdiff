@@ -40,6 +40,10 @@ namespace xlsdiff
 
                 // load name of first worksheet
                 string strSheet = resConn.GetSchema("Tables").Rows[0]["TABLE_NAME"].ToString();
+                if (strSheet == "_xlnm#Print_Titles")
+                {
+                    strSheet = resConn.GetSchema("Tables").Rows[1]["TABLE_NAME"].ToString();
+                }
 
                 objCommand = new OleDbCommand("SELECT * FROM [" + strSheet + "]", resConn)
                                  {CommandType = CommandType.Text};
